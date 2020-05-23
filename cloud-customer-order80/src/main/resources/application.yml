@@ -1,0 +1,21 @@
+server:
+  port: 80
+
+spring:
+  cloud:
+    config:
+      enabled: false
+  application:
+    name: cloud-customer-service
+eureka:
+  client:
+    register-with-eureka: true  #f表示所自己注册到注册中心（EurekaServer）
+    fetchRegistry: true #是否从EurekaServer抓取已有的注册信息民，默认是true,单节点无所谓，集群必须设置成true,才能配合ribbon使用负载均衡。
+    service-url:
+      #单机版 设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址。
+      #defaultZone: http://localhost:7001/eureka
+      #集群版  设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址。
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+  instance:
+    instance-id: OrderEureka80
+    prefer-ip-address: true #让访问路经可以以IP:Port的方式显示

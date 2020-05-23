@@ -1,0 +1,28 @@
+server:
+  port: 7001
+
+spring:
+  application:
+    name: cloud-eureka-server7001
+
+eureka:
+  instance:
+    hostname: eureka7001.com #eureka服务端的实例名称
+  client:
+    register-with-eureka: false  #false表示不向注册中心注册自己
+    fetch-registry: false #false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务
+    service-url:
+      #集群版，互相注册，相互守望
+      defaultZone: http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/ #设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址。
+      #单机版
+      #defaultZone: http://eureka7001.com:7001/eureka/
+  #默认情况下自我保护（CAP分布式系统理论中的AP【高可用性和分区容忍性，
+  #即对于注册过的服务实例，如果服务实例突然因为网络宕机，没有接收到心
+  #跳，不会马上剔除该服务实例，而是在多次或一段时间之后没有接收到心跳
+  #后，才会剔除或显示实例故障，这里来改变Eureka的这种默认自我保护机
+  #制，但不推荐使用】）
+  server:
+    enable-self-preservation: false #关闭自我保护，默认是开启自我保护的
+    #续期时间，即扫描失效服务的间隔时间
+    #配置Eureka Server清理无效节点的时间间隔为2秒，默认60000毫秒，即60秒
+    eviction-interval-timer-in-ms: 2000

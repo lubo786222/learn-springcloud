@@ -1,0 +1,55 @@
+server:
+  port: 8002
+
+spring:
+  cloud:
+    config:
+      enabled: false
+  application:
+    name: cloud-payment-service
+  datasource:
+    #   数据源基本配置
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: lubo786222
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.0.201:3306/mybatis?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    #   数据源其他配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
+mybatis:
+  # 指定全局配置文件位置
+  config-location: classpath:mybatis/mybatis-config.xml
+  #所有Entity别名类所在包
+  #type-aliases-package: com.lb.springcloud
+  # 指定sql映射文件位置
+  #mapper-locations: classpath:mybatis/mapper/*.xml
+
+
+eureka:
+  client:
+    register-with-eureka: true  #f表示所自己注册到注册中心（EurekaServer）
+    fetchRegistry: true #是否从EurekaServer抓取已有的注册信息民，默认是true,单节点无所谓，集群必须设置成true,才能配合ribbon使用负载均衡。
+    service-url:
+      #单机版 设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址。
+      #defaultZone: http://localhost:7001/eureka
+      #集群版 设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址。
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+  instance:
+    instance-id: PaymentEureka8002
+    prefer-ip-address: true #让访问路经可以以IP:Port的方式显示

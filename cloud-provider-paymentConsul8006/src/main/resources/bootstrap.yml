@@ -1,0 +1,19 @@
+server:
+  port: 8006
+
+spring:
+  application:
+    name: cloud-payment-service
+  cloud:
+    consul:
+      host: 192.168.0.201
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+        ip-address: 192.168.0.110
+        port: 8006
+        instance-id: PaymentConsul8006
+        include-hostname-in-instance-id: true
+        hostname: 192.168.0.110
+    config:
+      enabled: false

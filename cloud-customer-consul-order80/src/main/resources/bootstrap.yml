@@ -1,0 +1,19 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: cloud-customer-service
+  cloud:
+    consul:
+      host: 192.168.0.201
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+        ip-address: 192.168.0.110
+        port: 80
+        instance-id: OrderConsul8006
+        include-hostname-in-instance-id: true
+        hostname: 192.168.0.110
+    config:
+      enabled: false
